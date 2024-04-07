@@ -6,12 +6,12 @@ class Classifier(torch.nn.Module):
         super(Classifier, self).__init__()
 
         self.linear1 = torch.nn.Linear(478*2, 524)
-        self.linear2 = torch.nn.Linear(524, 128)
-        self.linear3 = torch.nn.Linear(128, 5)
+        self.activation = torch.nn.ReLU()  
+        self.batchNormalization1 = torch.nn.BatchNorm1d(524)  
+        self.linear2 = torch.nn.Linear(524, 256)
         self.activation = torch.nn.ReLU()
-        self.batchNormalization1 = torch.nn.BatchNorm1d(524)        
-        self.batchNormalization2 = torch.nn.BatchNorm1d(128)
-        self.softmax = torch.nn.Softmax()
+        self.batchNormalization2 = torch.nn.BatchNorm1d(256)
+        self.linear3 = torch.nn.Linear(256, 5) 
 
     def forward(self, x):
         x = self.linear1(x)
@@ -21,5 +21,4 @@ class Classifier(torch.nn.Module):
         x = self.activation(x)
         x = self.batchNormalization2(x)
         x = self.linear3(x)
-        x = self.softmax(x)
         return x
