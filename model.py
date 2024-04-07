@@ -12,6 +12,7 @@ class Classifier(torch.nn.Module):
         self.activation = torch.nn.ReLU()
         self.batchNormalization2 = torch.nn.BatchNorm1d(256)
         self.linear3 = torch.nn.Linear(256, 5) 
+        self.softmax = torch.nn.Softmax()
 
     def forward(self, x):
         x = self.linear1(x)
@@ -21,4 +22,5 @@ class Classifier(torch.nn.Module):
         x = self.activation(x)
         x = self.batchNormalization2(x)
         x = self.linear3(x)
+        x = self.softmax(x)
         return x
